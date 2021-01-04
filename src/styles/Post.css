@@ -1,0 +1,109 @@
+.postMain{
+    width: 100%;
+    min-height: 50px;
+    margin: 20px 20px 20px 0;
+    background-color: #fff;
+    border-radius: 2px;
+    border: solid 1px rgba(0, 0, 0, 0.068);
+    color: #262626;
+    overflow: hidden;
+}
+
+.postHeader{
+    display: flex;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    
+}
+
+.postHeaderProfile{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: .8em;
+    
+}
+
+.postHeaderProfile span{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: solid 1px rgba(0, 0, 0, 0.068);
+    margin-right: 10px;
+}
+
+.postMain img{
+    width: 100%;
+}
+
+.postButtons{
+    display: flex;
+    justify-content: space-between;
+    padding:  5px 10px 0 10px;
+}
+
+.postBttnLeft *{
+    margin-right: 15px;
+}
+
+.postDesc{
+    padding: 0 13px;
+    font-size: .9em;
+}
+
+.postViews{
+    color: #262626;
+    margin-bottom: 10px;
+}
+
+.postFullDesc{
+    width: 100%;
+    text-align: justify;
+}
+
+.postComments, .postDesc span{
+    margin: 5px 0;
+    color: #26262652;
+}
+
+.postAddComment{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    flex: 1;
+    height: 60px;
+    padding: 10px;
+    border-top: solid 1px rgba(0, 0, 0, 0.068);
+    border-bottom: solid 1px rgba(0, 0, 0, 0.068);
+}
+
+.postAddComment input{
+    width: 100%;
+    height: 100%;
+    border-style: none;
+}
+
+.postAddComment h5{
+    color: #0095F6;
+    cursor: pointer;
+}
+
+.postProfileImage{
+    overflow: hidden;
+}
+
+.postProfileImage img{
+    object-fit: cover;
+}
+
+@media (max-width:630px){
+    .postMain{
+        border-style: none;
+        border-top: solid 1px rgba(0, 0, 0, 0.068);
+        border-bottom: solid 1px rgba(0, 0, 0, 0.068);
+    }
+}
