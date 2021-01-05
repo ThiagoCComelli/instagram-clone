@@ -1,13 +1,23 @@
 import React,{useState,useEffect} from 'react'
 import Post from './Post'
+import NewPost from './NewPost'
 import '../styles/Contents.css'
-import { auth } from '../database/firebase'
+import {useSelector} from 'react-redux'
+import {auth,db} from '../database/firebase'
+import FlipMove from 'react-flip-move'
 
 function Contents(){
+    const user = useSelector(state => state.user)
     const [posts,setPosts] = useState([])
 
     useEffect(() => {
-        setPosts([...posts,{nome:'Thiago Comelli',idade:20,uid:0},{nome:'Outro Nome',idade:21,uid:1}])
+        db.collection('posts').orderBy('timestamp','desc').onSnapshot((docSnap) => {
+            setPosts(docSnap.docs.map((doc) => ({
+                id: doc.id,
+                data: doc.data()
+            })))
+        })
+
         // eslint-disable-next-line
     }, [])
 
@@ -15,9 +25,12 @@ function Contents(){
         <>
             <div className="contentsMain">
                 <div className="contentsPosts">
-                    {posts.map((post) => {
-                        return <Post key={post.uid} nome={post.nome} idade={post.idade}/>
-                    })}
+                    <NewPost />
+                    <FlipMove>
+                        {posts.map((post) => {
+                            return <Post key={post.id} props={post}/>
+                        })}
+                    </FlipMove>
                 </div>
                 <div className="contentsNews">
                     <div className="contentsNewsProfile">
@@ -25,8 +38,8 @@ function Contents(){
                             <img alt="Instagram" src={`${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
                         </div>
                         <div className="contentsNewsProfileInfo">
-                            <strong>thiagocomelli_</strong>
-                            <span>Thiago Comelli</span>
+                            <strong>{user.displayName}</strong>
+                            <span>{user.email}</span>
                         </div>
                         <h5 onClick={() => {
                             auth.signOut()

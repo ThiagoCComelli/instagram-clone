@@ -1,0 +1,79 @@
+.newPostMain{
+    width: 100%;
+    border-radius: 2px;
+    border: solid 1px rgba(0, 0, 0, 0.068);
+    color: #262626;
+    background-color: #fff;
+    margin-top: 15px;
+}
+
+.newPostTextArea{
+    width: 100%;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.068);
+}
+
+.newPostTextArea textarea{
+    width: 100%;
+    border-style: none;
+    resize: none;
+    padding: 10px;
+    scrollbar-color: rgba(0, 0, 0, 0.068) #fff; 
+    outline: none;
+}
+
+.newPostImageArea{
+    position: relative;
+    width: 100%;
+    min-height: 60px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.068);
+}
+
+.newPostDeleteImage{
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    cursor: pointer;
+}
+
+.newPostImageArea img{
+    width: 100%;
+    display: none;
+}
+
+.newPostbttnArea{
+    width: 100%;
+    padding: 15px;
+}
+
+.newPostBttn{
+    width: 100%;
+    border-style: none;
+    color: #0095F6;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: solid 1px #0095F6;
+    background-color: #fff;
+}
+
+.newImageDiv{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.068);
+}
+
+.newImageDiv input{
+    display: none;
+}
+
+.inputImageDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

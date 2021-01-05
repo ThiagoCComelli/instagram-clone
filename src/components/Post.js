@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{forwardRef} from 'react'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
@@ -6,21 +6,21 @@ import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
 import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
 import '../styles/Post.css'
 
-function Post({nome,idade}){
+const Post = forwardRef(({props}, ref) => {
 
     return(
         <>
-            <div className="postMain">
+            <div ref={ref} className="postMain">
                 <div className="postHeader">
                     <div className="postHeaderProfile">
                         <span className="postProfileImage">
                             <img alt="Instagram" src={`${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
                         </span>
-                        <strong>{nome}</strong>
+                        <strong>{props.data.author.displayName}</strong>
                     </div>
                     <MoreHorizIcon />
                 </div>
-                <img alt="Post" src={`${process.env.PUBLIC_URL}/images/paisagem.jpeg`}></img>
+                <img alt="Post" src={props.data.image}></img>
                 <div className="postButtons">
                     <div className="postBttnLeft">
                         <FavoriteBorderOutlinedIcon className="icon" style={{ fontSize: 30 }} />
@@ -33,15 +33,15 @@ function Post({nome,idade}){
                 </div>
                 <div className="postDesc">
                     <div className="postViews">
-                        <strong>899,743 views</strong>
+                        <strong>{props.data.likes} likes</strong>
                     </div>
                     <div className="postFullDesc">
-                        <strong>{nome}</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam condimentum purus id bibendum pulvinar. Cras a viverra nisi. Phasellus purus nisl, rutrum ut elit sed, sollicitudin porttitor nisl.
+                        <strong>{props.data.author.displayName}</strong> {props.data.description}
                     </div>
                     <div className="postComments">
                         <span>View all comments</span>
                     </div>
-                    <span>2 hours ago</span>
+                    <span>{`${props.data.timestamp.toDate()}`}</span>
                 </div>
                 <div className="postAddComment">
                     <input placeholder="Add a comment..." />
@@ -51,6 +51,6 @@ function Post({nome,idade}){
             </div>
         </>
     )
-}
+})
 
 export default Post

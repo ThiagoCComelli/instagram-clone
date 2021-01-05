@@ -14,11 +14,25 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((userAuth) => {
       if (userAuth){
-        dispatch(signIn(userAuth))
+        dispatch(signIn({
+            uid: userAuth.providerData[0].uid,
+            displayName: userAuth.providerData[0].displayName,
+            photoURL: userAuth.providerData[0].photoURL,
+            email: userAuth.providerData[0].email
+          }))
       } else {
         dispatch(signOut())
       }
     })
+
+    window.addEventListener('scroll', function() {
+      // console.log(window.innerHeight + window.scrollY)
+      // console.log(document.body.offsetHeight)
+      if ((window.innerHeight + window.scrollY - 60) >= document.body.offsetHeight) {
+         console.log("you're at the bottom of the page");
+      }
+   })
+
     // eslint-disable-next-line
   }, [])
 

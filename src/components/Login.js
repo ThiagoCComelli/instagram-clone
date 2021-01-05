@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {signIn} from '../actions'
-import {auth} from '../database/firebase'
+import {auth,db} from '../database/firebase'
 import '../styles/Login.css'
 
 function Login() {
@@ -13,7 +13,12 @@ function Login() {
     const login = (e) => {
         e.preventDefault()
         auth.signInWithEmailAndPassword(loginState.email,loginState.passWd).then((userAuth) => {
-            dispatch(signIn(userAuth))
+            dispatch(signIn({
+                uid: userAuth.user.providerData[0].uid,
+                displayName: userAuth.user.providerData[0].displayName,
+                photoURL: userAuth.user.providerData[0].photoURL,
+                email: userAuth.user.providerData[0].email
+              }))
         }).catch((err) => {
             console.log(err)
         })
@@ -23,12 +28,17 @@ function Login() {
         e.preventDefault()
         auth.createUserWithEmailAndPassword(registerState.email,registerState.passWd).then((userAuth) => {
             userAuth.user.updateProfile({
-                displayName: registerState.userName
+                displayName: registerState.fullName
             }).then(() => {
+                db.collection('users').doc(userAuth.user.providerData[0].uid).set({
+                    nickName: registerState.userName,
+                    email: registerState.email
+                })
                 dispatch(signIn({
-                    email: userAuth.user.email,
-                    uid: userAuth.user.uid,
-                    displayName: userAuth.user.displayName
+                    uid: userAuth.user.providerData[0].uid,
+                    displayName: userAuth.user.providerData[0].displayName,
+                    photoURL: userAuth.user.providerData[0].photoURL,
+                    email: userAuth.user.providerData[0].email
                 }))
             })
         })
