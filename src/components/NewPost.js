@@ -22,6 +22,12 @@ function NewPost(){
                         <h5>Upload image</h5>
                     </div>
                     <input id="inputImage" onChange={(e) => {
+                        if(e.target.files[0].size > 1000000){
+                            alert("File is too big! Maximun size 1MB");
+                            e.target.value = "";
+                            return
+                        }
+
                         var reader = new FileReader()
 
                         element.style.display = "block"
@@ -31,7 +37,7 @@ function NewPost(){
                             setState({...state,image:reader.result})
                         }
 
-                    }} accept="image/png, image/jpeg" type="file"></input>
+                    }} accept="image/*" type="file"></input>
                 </div>
             </>
         )

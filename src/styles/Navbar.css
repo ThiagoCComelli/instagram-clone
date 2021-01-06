@@ -55,10 +55,18 @@
     border: solid 1px black;
     background-color: #FAFAFA;
     overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .navbarAvatar img{
-    height: 100%;
+    object-fit: cover;
+}
+
+#navbarAvatarChange{
+    display: none;
 }
 
 @media (max-width:500px){

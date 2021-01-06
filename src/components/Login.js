@@ -32,13 +32,14 @@ function Login() {
             }).then(() => {
                 db.collection('users').doc(userAuth.user.providerData[0].uid).set({
                     nickName: registerState.userName,
-                    email: registerState.email
+                    email: registerState.email,
+                    photoURL: null
                 })
                 dispatch(signIn({
-                    uid: userAuth.user.providerData[0].uid,
-                    displayName: userAuth.user.providerData[0].displayName,
-                    photoURL: userAuth.user.providerData[0].photoURL,
-                    email: userAuth.user.providerData[0].email
+                    uid: registerState.email,
+                    displayName: registerState.fullName,
+                    photoURL: null,
+                    email: registerState.email
                 }))
             })
         })

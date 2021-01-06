@@ -33,6 +33,12 @@
     border-radius: 50%;
     border: solid 1px rgba(0, 0, 0, 0.068);
     margin-right: 10px;
+    overflow: hidden;
+    display: flex;
+}
+
+.postProfileImage img{    
+    object-fit: cover; 
 }
 
 .postMain img{
@@ -69,6 +75,10 @@
     color: #26262652;
 }
 
+.postComments span{
+    cursor: pointer;
+}
+
 .postAddComment{
     display: flex;
     align-items: center;
@@ -93,13 +103,12 @@
     cursor: pointer;
 }
 
-.postProfileImage{
-    overflow: hidden;
+.postCommentItem{
+    width: 100%;
+    margin: 5px 0;
 }
 
-.postProfileImage img{
-    object-fit: cover;
-}
+
 
 @media (max-width:630px){
     .postMain{

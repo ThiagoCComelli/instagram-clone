@@ -35,7 +35,7 @@ function Contents(){
                 <div className="contentsNews">
                     <div className="contentsNewsProfile">
                         <div className="contentsNewsProfileImage">
-                            <img alt="Instagram" src={`${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
+                            <img alt="Instagram" src={user.photoURL !== null ? user.photoURL : `${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
                         </div>
                         <div className="contentsNewsProfileInfo">
                             <strong>{user.displayName}</strong>
