@@ -1,0 +1,55 @@
+.mainModalConfig{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 120;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainModalConfigDiv{
+    width: 600px;
+    background-color: #FAFAFA;
+    padding: 0 10px 10px 10px;
+}
+
+.mainModalConfigImage{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.068);
+}
+
+.mainModalConfigDesc{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+}
+
+.mainModalConfigDesc p{
+    margin-top: 10px;
+}
+
+.mainModalConfigDesc textarea{
+    resize: none;
+    margin-top: -10px;
+}
+
+.mainModalConfigDiv button{
+    width: 100%;
+    border-style: none;
+    color: #0095F6;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: solid 1px #0095F6;
+    margin-top: 10px;
+    background-color: #fff;
+}

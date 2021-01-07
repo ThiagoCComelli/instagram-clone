@@ -22,7 +22,7 @@ function CommentItem({props}){
                 </span>
             </div>
             <div className="modalCommentDivComment">
-                <p><strong>{props.author.displayName}</strong> {props.message}</p>
+                <p><strong>{props.author.nickName}</strong> {props.message}</p>
             </div>
         </div>
         </>
@@ -50,7 +50,7 @@ function Modal({props}){
                             <span className="modalProfileImage">
                                 <img alt="Instagram" src={props.data.author.photoURL !== null ? props.data.author.photoURL : `${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
                             </span>
-                            <strong>{props.data.author.displayName}</strong>
+                            <strong>{props.data.author.nickName}</strong>
                         </div>
                         <MoreHorizIcon />
                     </div>

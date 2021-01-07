@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 import Post from './Post'
 import NewPost from './NewPost'
 import '../styles/Contents.css'
@@ -9,6 +10,7 @@ import FlipMove from 'react-flip-move'
 function Contents(){
     const user = useSelector(state => state.user)
     const [posts,setPosts] = useState([])
+    const history = useHistory()
 
     useEffect(() => {
         db.collection('posts').orderBy('timestamp','desc').onSnapshot((docSnap) => {
@@ -35,14 +37,19 @@ function Contents(){
                 <div id="contentsNews_" className="contentsNews">
                     <div className="contentsNewsProfile">
                         <div className="contentsNewsProfileImage">
-                            <img alt="Instagram" src={user.photoURL !== null ? user.photoURL : `${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
+                            <img className="icon" onClick={() => {
+                                history.push(`/profile/${user.nickName}`)
+                            }} alt="Instagram" src={user.photoURL !== null ? user.photoURL : `${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
                         </div>
                         <div className="contentsNewsProfileInfo">
-                            <strong>{user.displayName}</strong>
+                            <strong className="icon" onClick={() => {
+                                history.push(`/profile/${user.nickName}`)
+                            }}>{user.nickName}</strong>
                             <span>{user.email}</span>
                         </div>
                         <h5 onClick={() => {
                             auth.signOut()
+                            localStorage.setItem('permission','')
                         }}>Logout</h5>
                     </div>
                     <div className="websiteFooter">

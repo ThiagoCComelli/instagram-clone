@@ -50,6 +50,7 @@ function NewPost(){
                 description: state.text,
                 comments: [],
                 author: user,
+                authorUID: user.email,
                 timestamp: new Date(),
                 likes: 0
             }).then(() => {

@@ -7,18 +7,17 @@ import '../styles/Login.css'
 function Login() {
     const [isLogin,changeIsLogin] = useState(false)
     const [loginState,setLoginState] = useState({email:'',passWd:''})
-    const [registerState,setRegisterState] = useState({email:'',fullName:'',userName:'',passWd:''})
+    const [registerState,setRegisterState] = useState({email:'',fullName:'',nickName:'',passWd:''})
     const dispatch = useDispatch()
 
     const login = (e) => {
         e.preventDefault()
-        auth.signInWithEmailAndPassword(loginState.email,loginState.passWd).then((userAuth) => {
-            dispatch(signIn({
-                uid: userAuth.user.providerData[0].uid,
-                displayName: userAuth.user.providerData[0].displayName,
-                photoURL: userAuth.user.providerData[0].photoURL,
-                email: userAuth.user.providerData[0].email
-              }))
+        auth.signInWithEmailAndPassword(loginState.email,loginState.passWd).then(async (userAuth) => {
+            const userRef = await db.collection('users').doc(userAuth.user.providerData[0].uid).get()
+            
+            dispatch(signIn(userRef.data()))
+
+            localStorage.setItem('permission','true')
         }).catch((err) => {
             console.log(err)
         })
@@ -31,16 +30,24 @@ function Login() {
                 displayName: registerState.fullName
             }).then(() => {
                 db.collection('users').doc(userAuth.user.providerData[0].uid).set({
-                    nickName: registerState.userName,
+                    nickName: registerState.nickName,
+                    fullName: registerState.fullName,
                     email: registerState.email,
-                    photoURL: null
+                    photoURL: null,
+                    description: null,
+                    followers: 0,
+                    following: 0
                 })
                 dispatch(signIn({
-                    uid: registerState.email,
-                    displayName: registerState.fullName,
+                    fullName: registerState.fullName,
+                    nickName: registerState.nickName,
+                    email: registerState.email,
                     photoURL: null,
-                    email: registerState.email
+                    description: null,
+                    followers: 0,
+                    following: 0
                 }))
+                localStorage.setItem('permission','true')
             })
         })
     }
@@ -61,7 +68,7 @@ function Login() {
                                 setRegisterState({...registerState,fullName:e.target.value})
                             }} placeholder="Full Name" type="text"></input>
                             <input onChange={(e) => {
-                                setRegisterState({...registerState,userName:e.target.value})
+                                setRegisterState({...registerState,nickName:e.target.value})
                             }} placeholder="Username" type="text"></input>
                             <input onChange={(e) => {
                                 setRegisterState({...registerState,passWd:e.target.value})

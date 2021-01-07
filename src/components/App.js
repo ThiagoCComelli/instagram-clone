@@ -1,12 +1,14 @@
 import '../styles/App.css';
+import {BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import React,{useEffect} from 'react'
 import Navbar from './Navbar'
 import Contents from './Contents'
 import Modal from './Modal'
 import Login from './Login'
+import Profile from './Profile'
 import {useSelector,useDispatch} from 'react-redux'
 import {signIn,signOut} from '../actions'
-import {auth} from '../database/firebase';
+import {auth,db} from '../database/firebase';
 
 function App() {
   const isLogged = useSelector(state => state.user)
@@ -15,15 +17,12 @@ function App() {
   
   useEffect(() => {
     
-    auth.onAuthStateChanged((userAuth) => {
-      if (userAuth){
-        dispatch(signIn({
-          uid: userAuth.providerData[0].uid,
-          displayName: userAuth.providerData[0].displayName,
-            photoURL: userAuth.providerData[0].photoURL,
-            email: userAuth.providerData[0].email
-          }))
-        } else {
+    auth.onAuthStateChanged(async (userAuth) => {
+      if(userAuth !== null) {
+        const userRef = await db.collection('users').doc(userAuth.providerData[0].uid).get()
+
+        dispatch(signIn(userRef.data()))
+      } else {
         dispatch(signOut())
       }
     })
@@ -48,13 +47,18 @@ function App() {
 
   return (
     <>
-      {isLogged ? (
-        <>
-          <Navbar />
-          <Contents />
-          {havePost ? <Modal props={havePost} /> : null}
-        </>
-        ) : <Login />}
+    <Router>
+      <Switch>
+        {isLogged ? (
+          <>
+            <Navbar />
+            <Route path="/" exact component={Contents}/>
+            <Route path="/profile/:uid" exact component={Profile}/>
+            {havePost ? <Modal props={havePost} /> : null}
+          </>
+          ) : <Login />}
+      </Switch>
+    </Router>
     </>
   );
 }

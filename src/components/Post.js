@@ -4,6 +4,7 @@ import React,{forwardRef,useState} from 'react'
 import {useSelector,useDispatch} from 'react-redux'
 import {putPost} from '../actions/index'
 import {db} from '../database/firebase'
+import {useHistory} from 'react-router-dom'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
@@ -12,10 +13,13 @@ import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
 import '../styles/Post.css'
 
 function CommentItem({props}){
+    const history = useHistory()
     return(
         <>
         <div key={props.uid} className="postCommentItem">
-            <strong>{props.author.displayName}</strong> {props.message}
+            <strong className="icon" onClick={() => {
+                history.push(`/profile/${props.author.nickName}`)
+            }}>{props.author.nickName}</strong> {props.message}
         </div>
         </>
     )
@@ -25,16 +29,21 @@ const Post = forwardRef(({props}, ref) => {
     const user = useSelector(state => state.user)
     const [message,setMessage] = useState("")
     const dispatch = useDispatch()
+    const history = useHistory()
 
     return(
         <>
             <div ref={ref} className="postMain">
                 <div className="postHeader">
                     <div className="postHeaderProfile">
-                        <span className="postProfileImage borderColored">
+                        <span onClick={() => {
+                            history.push(`/profile/${props.data.author.nickName}`)
+                        }} className="postProfileImage borderColored icon">
                             <img alt="Instagram" src={props.data.author.photoURL !== null ? props.data.author.photoURL : `${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
                         </span>
-                        <strong>{props.data.author.displayName}</strong>
+                        <strong className="icon" onClick={() => {
+                            history.push(`/profile/${props.data.author.nickName}`)
+                        }}>{props.data.author.nickName}</strong>
                     </div>
                     <MoreHorizIcon />
                 </div>
