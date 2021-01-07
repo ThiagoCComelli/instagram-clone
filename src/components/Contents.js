@@ -32,7 +32,7 @@ function Contents(){
                         })}
                     </FlipMove>
                 </div>
-                <div className="contentsNews">
+                <div id="contentsNews_" className="contentsNews">
                     <div className="contentsNewsProfile">
                         <div className="contentsNewsProfileImage">
                             <img alt="Instagram" src={user.photoURL !== null ? user.photoURL : `${process.env.PUBLIC_URL}/images/person-icon.png`}></img>

@@ -1,7 +1,8 @@
 import {v4 as uuidv4} from 'uuid'
 import firebase from 'firebase/app';
 import React,{forwardRef,useState} from 'react'
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
+import {putPost} from '../actions/index'
 import {db} from '../database/firebase'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
@@ -23,13 +24,14 @@ function CommentItem({props}){
 const Post = forwardRef(({props}, ref) => {
     const user = useSelector(state => state.user)
     const [message,setMessage] = useState("")
+    const dispatch = useDispatch()
 
     return(
         <>
             <div ref={ref} className="postMain">
                 <div className="postHeader">
                     <div className="postHeaderProfile">
-                        <span className="postProfileImage">
+                        <span className="postProfileImage borderColored">
                             <img alt="Instagram" src={props.data.author.photoURL !== null ? props.data.author.photoURL : `${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
                         </span>
                         <strong>{props.data.author.displayName}</strong>
@@ -43,7 +45,7 @@ const Post = forwardRef(({props}, ref) => {
                             db.collection('posts').doc(props.id).update({
                                 likes: firebase.firestore.FieldValue.increment(1)
                             })
-                        }}  className="icon" style={{ fontSize: 30 }} />
+                        }} className="icon" style={{ fontSize: 30 }} />
                         <EmailOutlinedIcon className="icon" style={{ fontSize: 30 }} />
                         <SendOutlinedIcon className="icon" style={{ fontSize: 30 }} />
                     </div>
@@ -59,7 +61,9 @@ const Post = forwardRef(({props}, ref) => {
                         <strong>{props.data.author.displayName}</strong> {props.data.description}
                     </div>
                     <div className="postComments">
-                        <span>View all {props.data.comments.length} comments</span>
+                        <span onClick={() => {
+                            dispatch(putPost(props))
+                        }}>View all {props.data.comments.length} comments</span>
                     </div>
                     {(props.data.comments.slice(0,(props.data.comments.length > 2 ? 2 : props.data.comments.length))).map((item) => {
                         return <CommentItem key={item.uid} props={item} />

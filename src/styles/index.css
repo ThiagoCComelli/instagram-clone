@@ -17,3 +17,8 @@ code {
   box-sizing: border-box;
   outline: none;
 }
+
+.borderColored{
+  background-image: linear-gradient(301deg, rgba(0,255,19,1) 0%, rgba(0,129,214,1) 50%, rgba(182,0,255,1) 100%);
+  padding: 2px;
+}

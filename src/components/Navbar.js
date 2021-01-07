@@ -55,7 +55,9 @@ function Navbar(){
                         <HomeOutlinedIcon className="icon"/>
                         <EmailOutlinedIcon className="icon"/>
                         <ExploreOutlinedIcon className="icon"/>
-                        <FavoriteBorderIcon className="icon"/>
+                        <FavoriteBorderIcon onClick={() => {
+                            auth.signOut()
+                        }} className="icon"/>
                         <span onClick={() => {
                             document.getElementById("navbarAvatarChange").click()
                         }} className="navbarAvatar">
