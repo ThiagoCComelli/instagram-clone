@@ -81,7 +81,7 @@
 .mainProfilePosts{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-rows: 333px;
+    gap: 20px;
     margin-top: 30px;
     border-top: solid 1px rgba(0, 0, 0, 0.068);
     padding-top: 15px;
@@ -89,8 +89,9 @@
 }
 
 .mainProfilePostItem{
+    position: relative;
     width: 100%;
-    height: 100%;
+    padding-top: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,14 +99,14 @@
 }
 
 .mainProfilePostItemImage{
-    width: 300px;
-    height: 300px;
+    top: 0;
+    position: absolute;
     display: flex;
     overflow: hidden;
     cursor: pointer;
-    background-color: #fff;
     transition: .2s;
-    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .mainProfilePostItemImage img{
@@ -152,17 +153,14 @@
 }
 
 @media (max-width:1000px){
+
     .mainProfilePosts{
-        grid-auto-rows: auto;
+        gap: 5px;
+        margin: 0 5px;
     }
 
     .mainProfileContent{
         width: 100%;
-    }
-
-    .mainProfilePostItemImage{
-        width: 100%;
-        height: 30vh;
     }
 
     .mainProfileInfos{
