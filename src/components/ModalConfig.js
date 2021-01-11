@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import {useSelector} from 'react-redux'
-import {storage,db} from '../database/firebase'
+import {storage,db,auth} from '../database/firebase'
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -30,8 +30,16 @@ function ModalConfig({setConfig}){
                                 return
                             }
     
-                            storage.ref().child(`avatarImages/${user.email}`).put(e.target.files[0]).then((item) => {
+                            storage.ref().child(`avatarImages/${user.uid}`).put(e.target.files[0]).then(async (url) => {
                                 alert("Profile avatar uploaded!")
+                                const url_ = await url.ref.getDownloadURL()
+
+                                auth.currentUser.updateProfile({
+                                    photoURL: url_
+                                })
+                                db.collection('users').doc(user.uid).update({
+                                    photoURL: url_
+                                })
                             })
                         }catch{
 
@@ -46,7 +54,7 @@ function ModalConfig({setConfig}){
                     }}>{user.description}</textarea>
                 </div>
                 <button onClick={() => {
-                    db.collection('users').doc(user.email).update({description:description})
+                    db.collection('users').doc(user.uid).update({description:description})
                     setConfig(false)
                 }}>Submit</button>
             </div>

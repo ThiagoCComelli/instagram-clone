@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import firebase from 'firebase/app';
 import {useSelector,useDispatch} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 import {db} from '../database/firebase'
 import {removePost} from '../actions/index'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -13,6 +14,9 @@ import BookmarkBorderSharpIcon from '@material-ui/icons/BookmarkBorderSharp';
 import '../styles/Modal.css'
 
 function CommentItem({props}){
+    const dispatch = useDispatch()
+    const history = useHistory()
+
     return(
         <>
         <div className="modalCommentItem">
@@ -22,7 +26,10 @@ function CommentItem({props}){
                 </span>
             </div>
             <div className="modalCommentDivComment">
-                <p><strong>{props.author.nickName}</strong> {props.message}</p>
+                <p><strong className="icon" onClick={() => {
+                    history.push(`/profile/${props.author.nickName}`)
+                    dispatch(removePost())
+                }}>{props.author.nickName}</strong> {props.message}</p>
             </div>
         </div>
         </>
@@ -33,6 +40,7 @@ function Modal({props}){
     const user = useSelector(state => state.user)
     const [message,setMessage] = useState("")
     const dispatch = useDispatch()
+    const history = useHistory()
 
     return(
         <>
@@ -50,7 +58,10 @@ function Modal({props}){
                             <span className="modalProfileImage">
                                 <img alt="Instagram" src={props.data.author.photoURL !== null ? props.data.author.photoURL : `${process.env.PUBLIC_URL}/images/person-icon.png`}></img>
                             </span>
-                            <strong>{props.data.author.nickName}</strong>
+                            <strong className="icon" onClick={() => {
+                                history.push(`/profile/${props.data.author.nickName}`)
+                                dispatch(removePost())
+                            }}>{props.data.author.nickName}</strong>
                         </div>
                         <MoreHorizIcon />
                     </div>

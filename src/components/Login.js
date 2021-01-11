@@ -13,11 +13,9 @@ function Login() {
     const login = (e) => {
         e.preventDefault()
         auth.signInWithEmailAndPassword(loginState.email,loginState.passWd).then(async (userAuth) => {
-            const userRef = await db.collection('users').doc(userAuth.user.providerData[0].uid).get()
+            const userRef = await db.collection('users').where('nickName','==',userAuth.user.providerData[0].displayName).get()
             
-            dispatch(signIn(userRef.data()))
-
-            localStorage.setItem('permission','true')
+            dispatch(signIn(userRef.docs[0].data()))
         }).catch((err) => {
             console.log(err)
         })
@@ -27,27 +25,30 @@ function Login() {
         e.preventDefault()
         auth.createUserWithEmailAndPassword(registerState.email,registerState.passWd).then((userAuth) => {
             userAuth.user.updateProfile({
-                displayName: registerState.fullName
+                displayName: registerState.nickName
             }).then(() => {
-                db.collection('users').doc(userAuth.user.providerData[0].uid).set({
+                db.collection('users').doc(userAuth.user.uid).set({
                     nickName: registerState.nickName,
                     fullName: registerState.fullName,
                     email: registerState.email,
                     photoURL: null,
+                    uid: userAuth.user.uid,
                     description: null,
-                    followers: 0,
-                    following: 0
+                    followers: [],
+                    following: [],
+                    chats: []
                 })
                 dispatch(signIn({
                     fullName: registerState.fullName,
                     nickName: registerState.nickName,
                     email: registerState.email,
                     photoURL: null,
+                    uid: userAuth.user.uid,
                     description: null,
-                    followers: 0,
-                    following: 0
+                    followers: [],
+                    following: [],
+                    chats: []
                 }))
-                localStorage.setItem('permission','true')
             })
         })
     }

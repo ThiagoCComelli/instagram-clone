@@ -8,6 +8,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import {putPost} from '../actions/index'
 import ModalConfig from './ModalConfig'
+import firebase from 'firebase/app';
 import '../styles/Profile.css'
 
 function Profile(props){
@@ -39,6 +40,15 @@ function Profile(props){
         )
     }
 
+    const addUser = (uid) => {
+        db.collection('users').doc(myUser.uid).update({
+            following: firebase.firestore.FieldValue.arrayUnion({uid:uid})
+        })
+        db.collection('users').doc(uid).update({
+            followers: firebase.firestore.FieldValue.arrayUnion({uid:myUser.uid})
+        })
+    }
+
     useEffect(() => {
         db.collection('users').where('nickName','==',props.match.params.uid).onSnapshot((docSnap) => {
             setUser(docSnap.docs[0].data())
@@ -49,7 +59,7 @@ function Profile(props){
 
     useEffect(() => {
         if(user !== null && user !== undefined){
-            db.collection('posts').where('authorUID','==',user.email).orderBy('timestamp','desc').onSnapshot((docSnap) => {
+            db.collection('posts').where('authorUID','==',user.uid).orderBy('timestamp','desc').onSnapshot((docSnap) => {
                 setPosts(docSnap.docs.map((doc) => ({
                     id: doc.id,
                     data: doc.data()
@@ -77,9 +87,43 @@ function Profile(props){
                         <div className="mainProfileTitle">
                             <h2>{user.nickName}</h2>
                             <div className="profileInfosButton">
-                                <button><PersonAddIcon /></button>
-                                <button>Message</button>
-                                <button><ArrowDropDownIcon /></button>
+                                {myUser.nickName === props.match.params.uid ? null : (
+                                    <>
+                                        <button onClick={() => {addUser(user.uid)}}><PersonAddIcon /></button>
+                                        <button>Message</button>
+                                    </>
+                                )}
+                                <button onClick={async () => {
+                                    var exist = await db.collection('users').doc(myUser.uid).get().then((doc) => {
+                                        return doc.data().chats.some((item) => {
+                                            return item.with === user.uid
+                                        })
+                                    })
+                                    
+                                    if(!exist){
+                                        let newChat = await db.collection('chats').add({
+                                            users:[myUser.uid,user.uid],
+                                            messages:[]
+                                        })
+    
+                                        db.collection('users').doc(myUser.uid).update({
+                                            chats: firebase.firestore.FieldValue.arrayUnion({
+                                                chatId: newChat.id,
+                                                title: user.nickName,
+                                                with: user.uid
+                                            })
+                                        })
+    
+                                        db.collection('users').doc(user.uid).update({
+                                            chats: firebase.firestore.FieldValue.arrayUnion({
+                                                chatId: newChat.id,
+                                                title: myUser.nickName,
+                                                with: myUser.uid
+                                            })
+                                        })
+                                    }
+                                    
+                                }}><ArrowDropDownIcon /></button>
                                 {myUser.email === user.email ? <MoreHorizIcon onClick={() => {
                                     setConfig(true)
                                 }} className="icon" /> : null}
@@ -87,8 +131,8 @@ function Profile(props){
                         </div>
                         <div className="mainProfileNumbers">
                             <p><strong>{posts.length}</strong> <span>posts</span></p>
-                            <p><strong>{user.followers}</strong> <span>followers</span></p>
-                            <p><strong>{user.following}</strong> <span>following</span></p>
+                            <p><strong>{user.followers.length}</strong> <span>followers</span></p>
+                            <p><strong>{user.following.length}</strong> <span>following</span></p>
                         </div>
                         <div className="mainProfileDesc">
                             <strong>{user.fullName}</strong>

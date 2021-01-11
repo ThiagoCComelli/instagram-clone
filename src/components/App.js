@@ -7,6 +7,7 @@ import Modal from './Modal'
 import Login from './Login'
 import Profile from './Profile'
 import {useSelector,useDispatch} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 import {signIn,signOut} from '../actions'
 import {auth,db} from '../database/firebase';
 
@@ -14,14 +15,19 @@ function App() {
   const isLogged = useSelector(state => state.user)
   const havePost = useSelector(state => state.post)
   const dispatch = useDispatch()
+  const history = useHistory()
   
   useEffect(() => {
     
     auth.onAuthStateChanged(async (userAuth) => {
       if(userAuth !== null) {
-        const userRef = await db.collection('users').doc(userAuth.providerData[0].uid).get()
-
-        dispatch(signIn(userRef.data()))
+        try{
+          db.collection('users').doc(userAuth.uid).get().then((doc) => {
+            dispatch(signIn(doc.data()))
+          })
+        }catch{
+          history.go(0)
+        }
       } else {
         dispatch(signOut())
       }
