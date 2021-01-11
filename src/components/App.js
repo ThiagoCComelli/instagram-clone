@@ -6,6 +6,7 @@ import Contents from './Contents'
 import Modal from './Modal'
 import Login from './Login'
 import Profile from './Profile'
+import Messages from './Messages'
 import {useSelector,useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {signIn,signOut} from '../actions'
@@ -60,6 +61,7 @@ function App() {
             <Navbar />
             <Route path="/" exact component={Contents}/>
             <Route path="/profile/:uid" exact component={Profile}/>
+            <Route path="/messages" exact component={Messages}/>
             {havePost ? <Modal props={havePost} /> : null}
           </>
           ) : <Login />}

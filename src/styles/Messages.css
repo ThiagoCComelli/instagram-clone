@@ -1,0 +1,223 @@
+.mainMessages{
+    position: relative;
+    margin-top: 70px;
+    width: 100%;
+    height: calc(100vh - 85px);
+    display: flex;
+    justify-content: center;
+}
+
+.mainMessagesContents{
+    width: 1000px;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    border-radius: 3px;
+    border: solid 1px rgba(0, 0, 0, 0.068);
+}
+
+.mainMessagesChats{
+    width: 349px;
+    min-width: 349px;
+    max-width: 349px;
+    height: 100%;
+    border-right: solid 1px rgba(0, 0, 0, 0.068);
+}
+
+.mainMessagesDisplay{
+    width: 100%;
+    height: 100%;
+}
+
+.mainMessagesNewChats{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.068);
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.chatItem{
+    width: 100%;
+    height: 72px;
+    padding: 8px 20px;
+    cursor: pointer;
+}
+
+.chatItem:hover{
+    background-color: #FAFAFA;
+}
+
+.chatItemContent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.chatItemImage{
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.chatItemImage img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chatItemDesc{
+    font-weight: 400;
+    font-size: .9rem;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    word-wrap: none;
+}
+
+.chatItemDesc span:last-child{
+    color: rgba(0, 0, 0, 0.404);
+}
+
+.mainChatDisplay{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainChatDesc{
+    width: 100%;
+    /* height: 60px; */
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.068);
+
+}
+
+.mainChatDescImageDiv{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.mainChatDescImage{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.mainChatDescImage img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mainChatDescName{
+    display: flex;
+    flex-direction: column;
+}
+
+.mainChatDescName h4{
+    margin: 0;
+}
+
+.mainChatDescName span{
+    font-weight: 300;
+    font-size: .9rem;
+    color: rgba(0, 0, 0, 0.582);
+}
+
+.mainChatMessages{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    scrollbar-color: rgba(0, 0, 0, 0.068) #fff; 
+}
+
+.mainChatInput{
+    width: 100%;
+    height: 84px;
+    padding: 20px;
+}
+
+.mainChatInput input{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border-style: none;
+    border: solid 1px rgba(0, 0, 0, 0.068);
+    padding-left: 20px;
+}
+
+.mainMessageItem{
+    width: 100%;
+    margin: 5px;
+    display: flex;
+    position: relative;
+}
+
+.mainMessageItemContent *{
+    margin: 0;
+}
+
+.mainMessageItemContent{
+    max-width: 234px;
+    border: solid 1px #EFEFEF;
+    border-radius: 22px;
+    padding: 13px;
+    right: 0;
+    word-break: break-all;
+}
+
+.mainDefaultDisplay{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.mainDefaultDisplayIcon{
+    background-image: url("https://www.instagram.com/static/bundles/es6/sprite_glyphs_798b49104da7.png/798b49104da7.png");
+    width: 96px;
+    height: 96px;
+    background-position: -244px 0;
+}
+
+.mainDefaultDisplay h2{
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.mainDefaultDisplay span{
+    color: rgba(0, 0, 0, 0.582);
+    margin-bottom: 20px;
+}
+
+.mainDefaultDisplay button{
+    background-color: #0095F6;
+    border-style: none;
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}

@@ -93,37 +93,7 @@ function Profile(props){
                                         <button>Message</button>
                                     </>
                                 )}
-                                <button onClick={async () => {
-                                    var exist = await db.collection('users').doc(myUser.uid).get().then((doc) => {
-                                        return doc.data().chats.some((item) => {
-                                            return item.with === user.uid
-                                        })
-                                    })
-                                    
-                                    if(!exist){
-                                        let newChat = await db.collection('chats').add({
-                                            users:[myUser.uid,user.uid],
-                                            messages:[]
-                                        })
-    
-                                        db.collection('users').doc(myUser.uid).update({
-                                            chats: firebase.firestore.FieldValue.arrayUnion({
-                                                chatId: newChat.id,
-                                                title: user.nickName,
-                                                with: user.uid
-                                            })
-                                        })
-    
-                                        db.collection('users').doc(user.uid).update({
-                                            chats: firebase.firestore.FieldValue.arrayUnion({
-                                                chatId: newChat.id,
-                                                title: myUser.nickName,
-                                                with: myUser.uid
-                                            })
-                                        })
-                                    }
-                                    
-                                }}><ArrowDropDownIcon /></button>
+                                <button><ArrowDropDownIcon /></button>
                                 {myUser.email === user.email ? <MoreHorizIcon onClick={() => {
                                     setConfig(true)
                                 }} className="icon" /> : null}

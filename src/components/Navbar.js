@@ -22,7 +22,9 @@ function Navbar(){
                     <input placeholder="Search" type="text" />
                     <div className="mainNavbarContentsIcons">
                         <HomeOutlinedIcon className="icon"/>
-                        <EmailOutlinedIcon className="icon"/>
+                        <EmailOutlinedIcon onClick={() => {
+                            history.push('/messages')
+                        }} className="icon"/>
                         <ExploreOutlinedIcon className="icon"/>
                         <FavoriteBorderIcon onClick={() => {
                             auth.signOut()
