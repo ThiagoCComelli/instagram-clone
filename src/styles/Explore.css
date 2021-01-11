@@ -1,0 +1,15 @@
+.mainExplore{
+    width: 100%;
+    min-height: 100vh;  
+    display: flex;
+    justify-content: center; 
+    padding-top: 80px;
+}
+
+.mainExploreBox{
+    width: 1000px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}

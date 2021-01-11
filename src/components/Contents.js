@@ -13,13 +13,12 @@ function Contents(){
     const history = useHistory()
 
     useEffect(() => {
-        db.collection('posts').orderBy('timestamp','desc').onSnapshot((docSnap) => {
+        db.collection('posts').where('authorUID','in',[...user.following.map((item) => {return item.uid}),user.uid]).orderBy('timestamp','desc').onSnapshot((docSnap) => {
             setPosts(docSnap.docs.map((doc) => ({
                 id: doc.id,
                 data: doc.data()
             })))
         })
-
         // eslint-disable-next-line
     }, [])
 

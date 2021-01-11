@@ -152,6 +152,24 @@
     margin: 0 5px;
 }
 
+.mainError{
+    margin-top: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.mainError h2{
+    margin: 0;
+}
+
+.mainError span{
+    color: #0095F6;
+    cursor: pointer;
+}
+
 @media (max-width:1000px){
 
     .mainProfilePosts{
@@ -207,5 +225,4 @@
     .mainProfileNumbers p strong{
         margin-right: 5px;
     }
-
 }

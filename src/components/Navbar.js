@@ -12,6 +12,13 @@ function Navbar(){
     const user = useSelector(state => state.user)
     const history = useHistory()
 
+    const find = (e) => {
+        if(e.key === "Enter"){
+            history.push(`/profile/${e.target.value}`)
+            e.target.value = ""
+        }
+    }
+
     return(
         <>
             <div className="mainNavbar">
@@ -19,13 +26,17 @@ function Navbar(){
                     <img onClick={() => {
                         history.push("/")
                     }} className="icon" alt="Instagram" src={`${process.env.PUBLIC_URL}/images/instagram.svg`}></img>
-                    <input placeholder="Search" type="text" />
+                    <input onKeyDown={(e) => {find(e)}} placeholder="Search" type="text" />
                     <div className="mainNavbarContentsIcons">
-                        <HomeOutlinedIcon className="icon"/>
+                        <HomeOutlinedIcon onClick={() => {
+                            history.push("/")
+                        }} className="icon"/>
                         <EmailOutlinedIcon onClick={() => {
                             history.push('/messages')
                         }} className="icon"/>
-                        <ExploreOutlinedIcon className="icon"/>
+                        <ExploreOutlinedIcon onClick={() => {
+                            history.push("/explore")
+                        }} className="icon"/>
                         <FavoriteBorderIcon onClick={() => {
                             auth.signOut()
                         }} className="icon"/>
